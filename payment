@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wanz Official Payment</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://files.catbox.moe/kpbm3z.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #ff4c4c;
+      margin-right: 10px;
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      color: #fff;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    }
+
+    .description {
+      font-size: 1.1rem;
+      color: #ddd;
+      margin-bottom: 40px;
+    }
+
+    .payment-btn {
+      position: relative;
+      background: #111;
+      color: white;
+      padding: 16px 25px;
+      margin: 15px 10px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 1;
+      animation: pulseBtn 2.5s infinite ease-in-out;
+    }
+
+    .payment-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .payment-btn::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      right: -12px;
+      bottom: -12px;
+      background: conic-gradient(from 0deg, #ff0000, #00f0ff, #8000ff, #ff0000);
+      border-radius: 16px;
+      z-index: -2;
+      animation: spin 2s linear infinite;
+      filter: blur(15px) brightness(2.5);
+      opacity: 1;
+      box-shadow: 0 0 20px #ff0000, 0 0 40px #00f0ff, 0 0 60px #8000ff;
+    }
+
+    .payment-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #111;
+      border-radius: 12px;
+      z-index: -1;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .btn-wa {
+      margin-top: 40px;
+      display: inline-block;
+      background: linear-gradient(45deg, #00e676, #00c853);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 1.05rem;
+      animation: pulseBtn 3s infinite ease-in-out;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.65);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup {
+      background: linear-gradient(to bottom right, rgba(30,30,30,0.95), rgba(60,20,40,0.95));
+      border-radius: 20px;
+      padding: 30px 20px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255,0,0,0.2), 0 0 20px rgba(0,255,255,0.2);
+      animation: popupAppear 0.3s ease;
+      position: relative;
+    }
+
+    .popup.blue-bg { background: linear-gradient(to bottom right, #0d47a1, #1976d2); }
+    .popup.green-bg { background: linear-gradient(to bottom right, #1b5e20, #43a047); }
+    .popup.purple-bg { background: linear-gradient(to bottom right, #4a148c, #7b1fa2); }
+
+    @keyframes popupAppear {
+      from {transform: scale(0.85); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    .popup h2 {
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .payment-code-box {
+      background-color: rgba(255, 255, 255, 0.08);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #eee;
+      margin-top: 18px;
+    }
+
+    .copy-btn, .download-btn {
+      margin-top: 10px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    .copy-btn {
+      background-color: #ff1744;
+      color: white;
+    }
+
+    .download-btn {
+      background-color: #2196f3;
+      color: white;
+      text-decoration: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 1.4rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .qris-img {
+      width: 100%;
+      max-width: 260px;
+      border-radius: 12px;
+      margin: 15px auto;
+      display: block;
+    }
+
+    .copy-alert {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, #ff4c4c, #1e90ff);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 1rem;
+      display: none;
+      z-index: 1001;
+      animation: fadeInOut 3s ease forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% {opacity: 0; bottom: 20px;}
+      10% {opacity: 1; bottom: 30px;}
+      90% {opacity: 1; bottom: 30px;}
+      100% {opacity: 0; bottom: 20px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="https://files.catbox.moe/a8uk9h.jpg" class="logo-img" alt="PP">
+    <div class="logo-text">Wanz Official</div>
+  </div>
+
+  <div class="container">
+    <h1>💳 PAYMENT</h1>
+    <p class="description">Website pembayaran resmi Wanz Official.<br>Klik metode pembayaran untuk detailnya.</p>
+
+    <button class="payment-btn" onclick="showPopup('DANA', '083898206223')">🔷 DANA</button>
+    <button class="payment-btn" onclick="showPopup('GOPAY', '083898206223')">🟢 GOPAY</button>
+    <button class="payment-btn" onclick="showPopup('OVO', '083898206223')">🟣 OVO</button>
+    <button class="payment-btn" onclick="showQRIS()">🧾 QRIS</button>
+
+    <a href="https://wa.me/6283898206223" target="_blank" class="btn-wa">📩 Kirim Bukti via WhatsApp</a>
+
+    <footer>
+      <p>© 2025 Wanz Official • All Rights Reserved</p>
+    </footer>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+      <button class="close-btn" onclick="closePopup()">✖</button>
+      <h2 id="popupTitle">Metode</h2>
+      <div id="popupContent"></div>
+      <div class="note">📸 Setelah selesai membayar, harap kirim screenshot bukti transaksi ke WhatsApp kami.</div>
+    </div>
+  </div>
+
+  <div class="copy-alert" id="copyAlert">🎉 Yeay! Nomor berhasil disalin!</div>
+
+  <script>
+    function showPopup(method, number) {
+      const popup = document.getElementById('popup');
+      popup.className = 'popup';
+
+      if (method === 'DANA') popup.classList.add('blue-bg');
+      if (method === 'GOPAY') popup.classList.add('green-bg');
+      if (method === 'OVO') popup.classList.add('purple-bg');
+
+      document.getElementById('popupTitle').innerText = method;
+      document.getElementById('popupContent').innerHTML = `
+        <div class="payment-code-box" id="paymentNumber">${number}</div>
+        <button class="copy-btn" onclick="copyText('paymentNumber')">📋 Salin Nomor</button>
+      `;
+      document.getElementById('overlay').style.display = 'flex';
+    }
+
+    function showQRIS() {
+      const popup = document.getElementById('popup');
+      popup.className = 'popup';
+      document.getElementById('popupTitle').innerText = "QRIS";
+      document.getElementById('popupContent').innerHTML = `
+        <img src="https://files.catbox.moe/gzwrf8.jpeg" class="qris-img" alt="QRIS" />
+        <a href="https://files.catbox.moe/gzwrf8.jpeg" class="download-btn" download="qris-wanz.jpeg">⬇️ Download QRIS</a>
+      `;
+      document.getElementById('overlay').style.display = 'flex';
+    }
+
+    function closePopup() {
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    function copyText(id) {
+      navigator.clipboard.writeText(document.getElementById(id).innerText)
+        .then(() => {
+          const alertBox = document.getElementById('copyAlert');
+          alertBox.style.display = 'block';
+          setTimeout(() => alertBox.style.display = 'none', 3000);
+        });
+    }
+  </script>
+
+</body>
+</html>
