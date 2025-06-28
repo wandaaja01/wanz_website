@@ -1,0 +1,2 @@
+# wanz_website
+vercel
